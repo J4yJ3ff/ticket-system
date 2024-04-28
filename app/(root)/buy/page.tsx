@@ -10,13 +10,14 @@ type Inputs = {
   tel: number;
 };
 
-const page = () => {
+const Page = () => {
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<Inputs, any>();
+  } = useForm<Inputs>();
+
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
   console.log(watch("name")); // watch input value by passing the name of it
@@ -64,4 +65,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
