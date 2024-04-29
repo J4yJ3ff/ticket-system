@@ -57,7 +57,7 @@ const Page = () => {
           className="bg-slate-300"
         />
 
-        <Button type="submit" className="bg-red-500 hover:bg-gray-800">
+        <Button type="submit" className="bg-primary-base hover:bg-gray-800">
           Submit
         </Button>
       </form>

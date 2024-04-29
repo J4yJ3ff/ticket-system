@@ -24,7 +24,7 @@ const LeftSideBar = () => {
                 href={link.route}
                 className={`${
                   isActive
-                    ? "bg-red-500  rounded-lg font-bold"
+                    ? "bg-primary-base  rounded-lg font-bold"
                     : "text-gray-300"
                 } ${
                   isHome && "rounded-tr-[30px]"

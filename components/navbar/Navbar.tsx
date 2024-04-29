@@ -34,17 +34,16 @@ const NavContent = () => {
             <Link
               href={link.route}
               className={`${
-                isActive ? "bg-red-500  rounded-lg font-bold" : "text-gray-300"
-              } ${
-                isHome && "rounded-tr-[30px]"
-              } p-4 items-center justify-center flex`}
+                isActive
+                  ? "bg-primary-base rounded-lg font-bold"
+                  : "text-gray-300"
+              } w-full py-2 px-4 items-center justify-center flex my-8`}
             >
               {link.label}
             </Link>
           </SheetClose>
         );
       })}
-      ;
     </>
   );
 };
@@ -60,9 +59,12 @@ const Navbar = () => {
       <div className="absolute top-0 right-1/2 translate-x-1/2 -my-6 md:hidden max-md:right-[60px]">
         <Sheet>
           <SheetTrigger>
-            <Menu height={48} width={48} className="text-red-500" />
+            <Menu height={48} width={48} className="text-primary-base" />
           </SheetTrigger>
-          <SheetContent side="top">
+          <SheetContent
+            side="top"
+            className="rounded-b-[30px] bg-primary-500 border-none flex flex-1 items-center justify-center"
+          >
             <SheetClose>
               <NavContent />
             </SheetClose>
