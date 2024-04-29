@@ -29,7 +29,7 @@ const Page = () => {
       </h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-5 p-8 bg-primary-500 rounded-lg"
+        className="flex flex-col gap-5 p-8 bg-primary-500 rounded-lg text-primary-500"
       >
         {/* register your input into the hook by invoking the "register" function */}
         <Input
@@ -54,10 +54,13 @@ const Page = () => {
           type="tel"
           placeholder="Phone Number"
           {...register("tel", { required: true })}
-          className="bg-slate-300"
+          className="bg-slate-300 text-primary-100"
         />
 
-        <Button type="submit" className="bg-primary-base hover:bg-gray-800">
+        <Button
+          type="submit"
+          className="bg-primary-base hover:bg-gray-800 text-gray-200"
+        >
           Submit
         </Button>
       </form>
