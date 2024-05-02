@@ -1,11 +1,10 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { accessToken, express } from "@/lib/actions/daraja.action";
 import { createUser } from "@/lib/actions/ticket.action";
 import { useRouter } from "next/navigation";
-import { NextResponse } from "next/server";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 type Inputs = {
@@ -23,23 +22,36 @@ const Page = () => {
     formState: { errors },
   } = useForm<Inputs>();
 
+  const [isLoading, setisLoading] = useState(false);
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const { name, email, phone } = data;
 
-    const access = await accessToken();
-    const payment = await express({ access, phone });
+    setisLoading(true);
 
-    if (payment) {
+    const access = await accessToken();
+    const payment: any = await express({ access, phone });
+
+    if (
+      payment &&
+      payment.status === 200 &&
+      payment.data.message === "OK, payment success"
+    ) {
       try {
+        console.log(payment);
         const user = await createUser({
           name,
           email,
           phone,
         });
-        return NextResponse.json({ message: "User Created" });
+        setisLoading(false);
+        router.push("/profile");
+        // return NextResponse.json({ message: "User Created" });
       } catch (error: any) {
-        throw new error();
+        console.error("Error creating user:", error);
       }
+    } else {
+      console.error("Payment failed");
     }
   };
 
@@ -80,7 +92,9 @@ const Page = () => {
 
         <Button
           type="submit"
-          className="bg-primary-base hover:bg-gray-800 text-gray-200"
+          className={`${
+            isLoading ? "disabled bg-slate-600" : ""
+          }bg-primary-base hover:bg-gray-800 text-gray-200`}
         >
           Submit
         </Button>

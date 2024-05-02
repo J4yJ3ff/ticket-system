@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import { NextResponse } from "next/server";
+import { createTimestamp } from "../utils";
 
 interface accessProps {
   access: string;
@@ -31,29 +32,12 @@ export async function accessToken() {
 
 export async function express(data: accessProps) {
   const { access, phone } = data;
-  console.log(phone);
 
   const headers = {
     Authorization: `Bearer ${access}`,
   };
-  let date = new Date();
-  let timestamp =
-    date.getDate() +
-    "" +
-    "" +
-    date.getMonth() +
-    "" +
-    "" +
-    date.getFullYear() +
-    "" +
-    "" +
-    date.getHours() +
-    "" +
-    "" +
-    date.getMinutes() +
-    "" +
-    "" +
-    date.getSeconds();
+
+  const timestamp = createTimestamp();
 
   const password = Buffer.from(
     "174379" +
@@ -81,8 +65,19 @@ export async function express(data: accessProps) {
       paymentData,
       { headers }
     );
-    return NextResponse.json({ message: "OK, payment success" });
+    if (response.status === 200) {
+      console.log("Payment successful");
+      return {
+        status: 200,
+        data: { message: "OK, payment success" },
+        response,
+      };
+    } else {
+      console.log("Payment failed");
+      return { status: 400, data: { message: "Payment failed" } };
+    }
   } catch (error) {
     console.log(error);
+    return { status: 500, data: { message: "Internal server error" } };
   }
 }
