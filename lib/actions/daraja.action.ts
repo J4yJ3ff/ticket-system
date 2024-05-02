@@ -9,7 +9,7 @@ interface accessProps {
 }
 
 export async function accessToken() {
-  const auth = new Buffer(
+  const auth = Buffer.from(
     `${process.env.CONSUMER_KEY}:${process.env.CONSUMER_SECRET}`
   ).toString("base64");
 
