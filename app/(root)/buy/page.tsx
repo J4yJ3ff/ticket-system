@@ -1,26 +1,47 @@
 "use client";
-
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { accessToken, express } from "@/lib/actions/daraja.action";
+import { createUser } from "@/lib/actions/ticket.action";
+import { useRouter } from "next/navigation";
+import { NextResponse } from "next/server";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 type Inputs = {
   name: string;
   email: string;
-  tel: number;
+  phone: number;
 };
 
 const Page = () => {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const { name, email, phone } = data;
 
-  console.log(watch("name")); // watch input value by passing the name of it
+    const access = await accessToken();
+    const payment = await express({ access, phone });
+
+    if (payment) {
+      try {
+        const user = await createUser({
+          name,
+          email,
+          phone,
+        });
+        return NextResponse.json({ message: "User Created" });
+      } catch (error: any) {
+        throw new error();
+      }
+    }
+  };
 
   return (
     <section className=" h-[75vh] flex gap-10 flex-col justify-center items-center">
@@ -35,7 +56,7 @@ const Page = () => {
         <Input
           type="text"
           placeholder="Your Name"
-          {...register("name")}
+          {...register("name", { required: true })}
           className="bg-slate-300"
         />
 
@@ -53,7 +74,7 @@ const Page = () => {
         <Input
           type="tel"
           placeholder="Phone Number"
-          {...register("tel", { required: true })}
+          {...register("phone", { required: true })}
           className="bg-slate-300 text-primary-100"
         />
 
