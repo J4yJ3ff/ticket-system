@@ -29,6 +29,8 @@ export async function accessToken() {
   }
 }
 
+/////////////////////////STK Push/////////////////////////////
+
 export async function express(data: accessProps) {
   const { access, phone } = data;
 
@@ -46,6 +48,8 @@ export async function express(data: accessProps) {
       timestamp
   ).toString("base64");
 
+  //////////////////////Payment data////////////////////////////
+
   const paymentData = {
     BusinessShortCode: "174379",
     Password: password,
@@ -60,6 +64,8 @@ export async function express(data: accessProps) {
     TransactionDesc: "Cultural Show",
   };
 
+  //////////////////////////Try Catch Block/////////////////////////
+
   try {
     const response = await axios.post(
       "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
@@ -68,11 +74,7 @@ export async function express(data: accessProps) {
     );
     if (response.status === 200) {
       console.log(response.data);
-      return {
-        status: 200,
-        data: { message: "OK, payment success" },
-        response,
-      };
+      return response.data;
     } else {
       console.log("Payment failed");
       return { status: 400, data: { message: "Payment failed" } };

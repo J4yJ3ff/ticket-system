@@ -33,25 +33,25 @@ const Page = () => {
       const access = await accessToken();
       console.log("Access token", access);
 
-      const payment = await express({ access, phone });
+      express({ access, phone });
 
-      if (payment.status === 200) {
-        try {
-          const user = await createUser({
-            name,
-            email,
-            phone,
-          });
-          console.log("User created:", user);
-          setisLoading(false);
-          router.push("/profile");
-          // return NextResponse.json({ message: "User Created" });
-        } catch (error: any) {
-          console.error("Error creating user:", error);
-        }
-      } else {
-        console.error("Payment failed");
-      }
+      // if (payment.status === 200) {
+      //   try {
+      //     const user = await createUser({
+      //       name,
+      //       email,
+      //       phone,
+      //     });
+      //     console.log("User created:", user);
+      //     setisLoading(false);
+      //     router.push("/profile");
+      //     // return NextResponse.json({ message: "User Created" });
+      //   } catch (error: any) {
+      //     console.error("Error creating user:", error);
+      //   }
+      // } else {
+      //   console.error("Payment failed");
+      // }
     } catch (error) {
       console.log("Error", error);
     }
