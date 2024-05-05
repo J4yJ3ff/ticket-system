@@ -32,13 +32,10 @@ const Page = () => {
     try {
       const access = await accessToken();
       console.log("Access token", access);
+
       const payment = await express({ access, phone });
-      console.log("Payment response", payment);
-      if (
-        payment &&
-        payment.status === 200 &&
-        payment.data.message === "OK, payment success"
-      ) {
+
+      if (payment.status === 200) {
         try {
           const user = await createUser({
             name,

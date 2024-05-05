@@ -67,7 +67,7 @@ export async function express(data: accessProps) {
       { headers }
     );
     if (response.status === 200) {
-      console.log("Payment successful");
+      console.log(response.data);
       return {
         status: 200,
         data: { message: "OK, payment success" },
