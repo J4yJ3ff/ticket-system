@@ -19,7 +19,7 @@ const Home = () => {
         <div className="flex gap-4 pt-8">
           <Link href="/buy">
             <Button className="bg-primary-base hover:bg-primary-500">
-              Buy Ticket
+              Buy Tickets
             </Button>
           </Link>
         </div>
