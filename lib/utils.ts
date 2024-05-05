@@ -16,3 +16,11 @@ export function createTimestamp() {
 
   return `${year}${month}${date}${hours}${minutes}${seconds}`;
 }
+
+export function formatPhoneNumber(phoneNumber: string): string {
+  phoneNumber = phoneNumber.replace(/\D/g, "");
+  if (phoneNumber.startsWith("0")) {
+    phoneNumber = "254" + phoneNumber.slice(1);
+  }
+  return phoneNumber;
+}

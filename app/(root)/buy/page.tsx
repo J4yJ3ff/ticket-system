@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { accessToken, express } from "@/lib/actions/daraja.action";
@@ -10,7 +10,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 type Inputs = {
   name: string;
   email: string;
-  phone: number;
+  phone: string;
 };
 
 const Page = () => {
@@ -29,29 +29,34 @@ const Page = () => {
 
     setisLoading(true);
 
-    const access = await accessToken();
-    const payment: any = await express({ access, phone });
-
-    if (
-      payment &&
-      payment.status === 200 &&
-      payment.data.message === "OK, payment success"
-    ) {
-      try {
-        console.log(payment);
-        const user = await createUser({
-          name,
-          email,
-          phone,
-        });
-        setisLoading(false);
-        router.push("/profile");
-        // return NextResponse.json({ message: "User Created" });
-      } catch (error: any) {
-        console.error("Error creating user:", error);
+    try {
+      const access = await accessToken();
+      console.log("Access token", access);
+      const payment = await express({ access, phone });
+      console.log("Payment response", payment);
+      if (
+        payment &&
+        payment.status === 200 &&
+        payment.data.message === "OK, payment success"
+      ) {
+        try {
+          const user = await createUser({
+            name,
+            email,
+            phone,
+          });
+          console.log("User created:", user);
+          setisLoading(false);
+          router.push("/profile");
+          // return NextResponse.json({ message: "User Created" });
+        } catch (error: any) {
+          console.error("Error creating user:", error);
+        }
+      } else {
+        console.error("Payment failed");
       }
-    } else {
-      console.error("Payment failed");
+    } catch (error) {
+      console.log("Error", error);
     }
   };
 

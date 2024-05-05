@@ -1,12 +1,11 @@
 "use server";
 
 import axios from "axios";
-import { NextResponse } from "next/server";
-import { createTimestamp } from "../utils";
-
+import { createTimestamp, formatPhoneNumber } from "../utils";
+import ngrok from "ngrok";
 interface accessProps {
   access: string;
-  phone: number;
+  phone: string;
 }
 
 export async function accessToken() {
@@ -33,6 +32,8 @@ export async function accessToken() {
 export async function express(data: accessProps) {
   const { access, phone } = data;
 
+  const formattedNumber = formatPhoneNumber(phone);
+
   const headers = {
     Authorization: `Bearer ${access}`,
   };
@@ -51,10 +52,10 @@ export async function express(data: accessProps) {
     Timestamp: timestamp,
     TransactionType: "CustomerPayBillOnline",
     Amount: "1",
-    PartyA: "254708374149",
+    PartyA: formattedNumber,
     PartyB: "174379",
-    PhoneNumber: "254708374149",
-    CallBackURL: "https://ticket-system-orpin.vercel.app/profile",
+    PhoneNumber: formattedNumber,
+    CallBackURL: "https://ticket-system-orpin.vercel.app/callback",
     AccountReference: "TBT",
     TransactionDesc: "Cultural Show",
   };

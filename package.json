@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "ngrok": "ngrok http 3000"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -20,6 +21,7 @@
     "mongodb": "^6.5.0",
     "mongoose": "^8.3.2",
     "next": "14.2.3",
+    "ngrok": "^5.0.0-beta.2",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.51.3",

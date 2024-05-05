@@ -6,7 +6,7 @@ import { connectToDatabase } from "../mongoose";
 interface CreateUserParams {
   name: string;
   email: string;
-  phone: number;
+  phone: string;
 }
 
 // export async function getUserById(params: any) {
