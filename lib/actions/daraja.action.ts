@@ -76,8 +76,8 @@ export async function express(data: accessProps) {
       console.log(response.data);
       return response.data;
     } else {
-      console.log("Payment failed");
-      return { status: 400, data: { message: "Payment failed" } };
+      console.log("Request failed");
+      return { status: 400, data: { message: "Request failed" } };
     }
   } catch (error) {
     console.log(error);
