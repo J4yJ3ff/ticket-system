@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import { createTimestamp, formatPhoneNumber } from "../utils";
+import ngrok from "ngrok";
 interface accessProps {
   access: string;
   phone: string;
@@ -47,6 +48,9 @@ export async function express(data: accessProps) {
       timestamp
   ).toString("base64");
 
+  const CallBackUrl = await ngrok.connect(3000);
+  console.log(CallBackUrl);
+
   //////////////////////Payment data////////////////////////////
   const paymentData = {
     BusinessShortCode: "174379",
@@ -57,7 +61,7 @@ export async function express(data: accessProps) {
     PartyA: formattedNumber,
     PartyB: "174379",
     PhoneNumber: formattedNumber,
-    CallBackURL: "https://ticket-system-orpin.vercel.app/api/callback",
+    CallBackURL: `${CallBackUrl}/api/callback`,
     AccountReference: "TBT",
     TransactionDesc: "Cultural Show",
   };
