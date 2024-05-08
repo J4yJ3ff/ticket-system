@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { accessToken, express } from "@/lib/actions/daraja.action";
@@ -70,6 +70,7 @@ const Page = () => {
         <Input
           type="text"
           placeholder="Your Name"
+          value="J4y J3ff"
           {...register("name", { required: true })}
           className="bg-slate-300"
         />
@@ -78,6 +79,7 @@ const Page = () => {
         <Input
           type="email"
           placeholder="Your Email Address"
+          value="gaspergvj@gmil.com"
           {...register("email", { required: true })}
           className="bg-slate-300"
         />
@@ -88,6 +90,7 @@ const Page = () => {
         <Input
           type="tel"
           placeholder="Phone Number"
+          value="0708374149"
           {...register("phone", { required: true })}
           className="bg-slate-300 text-primary-100"
         />
