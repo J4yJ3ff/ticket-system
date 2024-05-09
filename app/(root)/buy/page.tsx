@@ -90,7 +90,6 @@ const Page = () => {
         <Input
           type="tel"
           placeholder="Phone Number"
-          value="0708374149"
           {...register("phone", { required: true })}
           className="bg-slate-300 text-primary-100"
         />
