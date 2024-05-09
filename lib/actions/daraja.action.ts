@@ -48,8 +48,8 @@ export async function express(data: accessProps) {
       timestamp
   ).toString("base64");
 
-  const CallBackUrl = await ngrok.connect(3000);
-  console.log(CallBackUrl);
+  // const CallBackUrl = await ngrok.connect(3000);
+  // console.log(CallBackUrl);
 
   //////////////////////Payment data////////////////////////////
   const paymentData = {
@@ -61,7 +61,7 @@ export async function express(data: accessProps) {
     PartyA: formattedNumber,
     PartyB: "174379",
     PhoneNumber: formattedNumber,
-    CallBackURL: `${CallBackUrl}/api/callback`,
+    CallBackURL: `https://ticket-system-orpin.vercel.app/api/callback`,
     AccountReference: "TBT",
     TransactionDesc: "Cultural Show",
   };
