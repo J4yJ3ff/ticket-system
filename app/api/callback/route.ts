@@ -6,6 +6,18 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: any, res: any) {
   const data = await req.json();
-  console.log(data);
+  console.log(data.Body.stkCallback.CallbackMetadata);
   return NextResponse.json({ message: "This is a POST Request" });
 }
+
+// {
+//     Body: {
+//       stkCallback: {
+//         MerchantRequestID: '7071-4170-a0e4-8345632bad44407220',
+//         CheckoutRequestID: 'ws_CO_09052024123348699797919705',
+//         ResultCode: 0,
+//         ResultDesc: 'The service request is processed successfully.',
+//         CallbackMetadata: [Object]
+//       }
+//     }
+//   }
