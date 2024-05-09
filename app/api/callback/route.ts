@@ -9,9 +9,7 @@ export async function POST(req: any, res: any) {
 
   const callbackMetadata = data.Body.stkCallback.CallbackMetadata;
   console.log(callbackMetadata);
-  // return NextResponse.json({ message: "This is a POST Request" });
-
-  return data;
+  return NextResponse.json({ message: "This is a POST Request" });
 }
 
 // {
