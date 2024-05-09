@@ -6,6 +6,7 @@ import { accessToken, express } from "@/lib/actions/daraja.action";
 import { createUser } from "@/lib/actions/ticket.action";
 import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { POST } from "@/app/api/callback/route";
 
 type Inputs = {
   name: string;
