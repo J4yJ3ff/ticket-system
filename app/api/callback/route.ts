@@ -6,7 +6,9 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: any, res: any) {
   const data = await req.json();
-  console.log(data);
+
+  const callbackMetadata = data.Body.stkCallback.CallbackMetadata;
+  console.log(callbackMetadata);
   // return NextResponse.json({ message: "This is a POST Request" });
 
   return data;
