@@ -9,20 +9,20 @@ interface CreateUserParams {
   phone: string;
 }
 
-// export async function getUserById(params: any) {
-//   try {
-//     connectToDatabase();
+export async function getUserByPhone(params: any) {
+  try {
+    connectToDatabase();
 
-//     const { userId } = params;
+    const { userPhone } = params;
 
-//     const user = await User.findOne({ clerkId: userId });
+    const user = await User.findOne({ phone: userPhone });
 
-//     return user;
-//   } catch (error) {
-//     console.log(error);
-//     throw error;
-//   }
-// }
+    return user;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
 
 export async function createUser(userData: CreateUserParams) {
   try {
