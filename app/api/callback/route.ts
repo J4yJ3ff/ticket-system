@@ -11,6 +11,8 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(req: any, res: any) {
   const data = await req.json();
 
+  console.log(data);
+
   const callbackData = data.Body.stkCallback.CallbackMetadata;
 
   const result_code = callbackData.Body.stkCallback.ResultCode;
