@@ -2,7 +2,6 @@
 
 import axios from "axios";
 import { createTimestamp, formatPhoneNumber } from "../utils";
-import ngrok from "ngrok";
 interface accessProps {
   access: string;
   phone: string;
@@ -47,9 +46,6 @@ export async function express(data: accessProps) {
       "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919" +
       timestamp
   ).toString("base64");
-
-  // const CallBackUrl = await ngrok.connect(3000);
-  // console.log(CallBackUrl);
 
   //////////////////////Payment data////////////////////////////
   const paymentData = {
