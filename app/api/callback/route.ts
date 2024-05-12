@@ -4,19 +4,11 @@ import { getUserInfo } from "@/lib/actions/ticket.action";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 // pages/api/stkPushCallback.js
 
 export async function POST(req: any, res: any) {
   const data = await req.json();
 
-  handleCallback(data);
-
-  return NextResponse.json({ message: "Successful Payment" });
-}
-
-export async function handleCallback(data: any) {
   const callbackData = data.Body.stkCallback.CallbackMetadata;
 
   const result_code = callbackData.Body.stkCallback.ResultCode;
@@ -43,4 +35,5 @@ export async function handleCallback(data: any) {
 
     console.log(userInfo);
   }
+  return NextResponse.json({ message: "Successful Payment" });
 }
