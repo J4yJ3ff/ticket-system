@@ -8,6 +8,7 @@ import { Resend } from "resend";
 
 export async function POST(req: any, res: any) {
   const data = await req.json();
+  console.log(data);
 
   const callbackData = data.Body.stkCallback.CallbackMetadata;
 
