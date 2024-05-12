@@ -7,6 +7,7 @@ import { createUser } from "@/lib/actions/ticket.action";
 import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { NextResponse } from "next/server";
+import { useGlobalContext } from "@/context/UserProvider";
 
 type Inputs = {
   name: string;
@@ -61,6 +62,7 @@ const Page = () => {
       <h1 className="text-center text-2xl sm:text-3xl md:text-3xl lg:text-5xl">
         Fill in your Information to buy Ticket
       </h1>
+
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-5 p-8 bg-primary-500 rounded-lg text-primary-500"
