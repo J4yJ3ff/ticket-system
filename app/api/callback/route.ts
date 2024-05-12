@@ -11,16 +11,22 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(req: any, res: any) {
   const data = await req.json();
 
-  console.log(data);
+  handleCallback(data);
 
+  return NextResponse.json({ message: "Successful Payment" });
+}
+
+export async function handleCallback(data: any) {
   const callbackData = data.Body.stkCallback.CallbackMetadata;
 
   const result_code = callbackData.Body.stkCallback.ResultCode;
+  console.log(result_code);
 
   const phoneObj = callbackData.Item.find(
     (obj: any) => obj.Name === "PhoneNumber"
   );
   const phone: string = phoneObj.Value;
+  console.log(phone);
 
   if (result_code !== 0) {
     // If the result code is not 0, there was an error
@@ -29,30 +35,12 @@ export async function POST(req: any, res: any) {
       ResultCode: result_code,
       ResultDesc: error_message,
     };
-    return res.json(response_data);
+    return NextResponse.json(response_data);
   }
 
-  // const userInfo = await getUserInfo(phone);
+  if (result_code === 0) {
+    const userInfo = await getUserInfo(phone);
 
-  // console.log(userInfo);
-
-  // if (result_code === 0) {
-  //   if (userInfo && typeof userInfo.email === "string") {
-  //     const email = userInfo.user.email;
-  //     const { data, error } = await resend.emails.send({
-  //       from: "Acme <onboarding@resend.dev>",
-  //       to: [{ email }],
-  //       subject: "Cultural Show Ticket",
-  //       html: "<strong>it works!</strong>",
-  //     });
-
-  //     if (error) {
-  //       return res.status(400).json(error);
-  //     }
-
-  //     res.status(200).json(data);
-  //   }
-  // }
-
-  return NextResponse.json({ message: "Successful Payment" });
+    console.log(userInfo);
+  }
 }

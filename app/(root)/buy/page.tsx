@@ -7,6 +7,7 @@ import { createUser } from "@/lib/actions/ticket.action";
 import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { NextResponse } from "next/server";
+import { POST, handleCallback } from "@/app/api/callback/route";
 
 type Inputs = {
   name: string;
@@ -41,8 +42,10 @@ const Page = () => {
             phone,
           });
 
+          //////////Confirm Payment///////////////
+          handleCallback;
+
           setisLoading(false);
-          await new Promise((resolve) => setTimeout(resolve, 500));
 
           router.push("/profile");
           return NextResponse.json({ message: "User Created" });
