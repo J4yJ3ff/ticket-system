@@ -46,7 +46,7 @@ const Page = () => {
 
           setisLoading(false);
 
-          router.push("/profile");
+          router.push("/api/callback");
           return NextResponse.json({ message: "User Created" });
         } catch (error: any) {
           console.error("Error creating user:", error);

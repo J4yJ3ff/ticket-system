@@ -2,7 +2,6 @@
 
 import { useGlobalContext } from "@/context/UserProvider";
 import { getUserInfo } from "@/lib/actions/ticket.action";
-import { User } from "lucide-react";
 import { NextResponse } from "next/server";
 import { useEffect } from "react";
 import { Resend } from "resend";
@@ -11,18 +10,18 @@ export async function POST(req: any, res: any) {
   const data = await req.json();
   console.log("data:", data);
 
-  // const callbackMetadata = data.Body.stkCallback.CallbackMetadata;
-  // console.log("Metadata:", callbackMetadata);
-  // const phoneObj = callbackMetadata.Item.find(
-  //   (obj: any) => obj.Name === "PhoneNumber"
-  // );
+  const callbackMetadata = data.Body.stkCallback.CallbackMetadata;
+  console.log("Metadata:", callbackMetadata);
+  const phoneObj = callbackMetadata.Item.find(
+    (obj: any) => obj.Name === "PhoneNumber"
+  );
 
-  // console.log("PhoneObj:", phoneObj);
-  // const phone = phoneObj.Value;
-  // console.log("phone:", phone);
+  console.log("PhoneObj:", phoneObj);
+  const phone = phoneObj.Value;
+  console.log("phone:", phone);
 
-  // const userInfo = await getUserInfo("0797919705");
-  // console.log("userInfo:", userInfo.phone);
+  const userInfo = await getUserInfo("0797919705");
+  console.log("userInfo:", userInfo.phone);
 
   return NextResponse.json({ message: "This is a POST Request" });
 }
