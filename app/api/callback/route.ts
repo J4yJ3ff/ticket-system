@@ -2,6 +2,7 @@
 
 import { useGlobalContext } from "@/context/UserProvider";
 import { getUserInfo } from "@/lib/actions/ticket.action";
+import { formatMobileNumber } from "@/lib/utils";
 import { NextResponse } from "next/server";
 import { useEffect } from "react";
 import { Resend } from "resend";
@@ -16,12 +17,22 @@ export async function POST(req: any, res: any) {
     (obj: any) => obj.Name === "PhoneNumber"
   );
 
-  console.log("PhoneObj:", phoneObj);
-  const phone = phoneObj.Value;
-  console.log("phone:", phone);
+  const result_code = callbackMetadata.Body.stkCallback.ResultCode;
 
-  const userInfo = await getUserInfo("0797919705");
-  console.log("userInfo:", userInfo.phone);
+  console.log("PhoneObj:", phoneObj);
+
+  const formattedPhone = formatMobileNumber(phoneObj);
+  console.log("formattedPhone:", formattedPhone);
+
+  const userInfo = await getUserInfo(formattedPhone);
+  const { email, name }: { email: string; name: string } = userInfo;
+
+  console.log(email, name);
+  ////////////////////Email Payload////////////////////////////
+  //////////////////////Qr_Encode//////////////////////////////
+
+  if (result_code) {
+  }
 
   return NextResponse.json({ message: "This is a POST Request" });
 }

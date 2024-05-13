@@ -24,3 +24,20 @@ export function formatPhoneNumber(phoneNumber: string): string {
   }
   return phoneNumber;
 }
+
+export function formatMobileNumber(phoneObj: {
+  Name: string;
+  Value: number;
+}): string {
+  let phoneNumber = phoneObj.Value.toString(); // Convert the phone number to a string
+
+  // Remove the country code '254' if it exists
+  phoneNumber = phoneNumber.replace(/^254/, "");
+
+  // Check if the number starts with '0' and remove it if it does
+  if (!phoneNumber.startsWith("0")) {
+    phoneNumber = "0" + phoneNumber;
+  }
+
+  return phoneNumber;
+}
