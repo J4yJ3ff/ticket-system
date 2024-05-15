@@ -53,13 +53,8 @@ export async function POST(req: any, res: any) {
       port: 587,
       secure: false, // Use `true` for port 465, `false` for all other ports
       auth: {
-<<<<<<< HEAD
         user: process.env.GOOGLE_APP_EMAIL,
         pass: process.env.GOOGLE_APP_PASS,
-=======
-        user: "",
-        pass: "",
->>>>>>> 0f1ada82bc16f21fd9ffb61e87ce9131c6b56bf2
       },
     });
 
