@@ -70,7 +70,6 @@ const Page = () => {
         <Input
           type="text"
           placeholder="Your Name"
-          value="J4y J3ff"
           {...register("name", { required: true })}
           className="bg-slate-300"
         />
@@ -79,7 +78,6 @@ const Page = () => {
         <Input
           type="email"
           placeholder="Your Email Address"
-          value="jeffryjames07@gmail.com"
           {...register("email", { required: true })}
           className="bg-slate-300"
         />
