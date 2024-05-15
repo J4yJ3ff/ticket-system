@@ -7,8 +7,10 @@ import { NextResponse } from "next/server";
 import qr from "qrcode";
 import nodemailer from "nodemailer";
 import { url } from "inspector";
+import { useRouter } from "next/navigation";
 
 export async function POST(req: any, res: any) {
+  const router = useRouter();
   const data = await req.json();
   console.log("data:", data);
 
@@ -82,6 +84,8 @@ export async function POST(req: any, res: any) {
       console.log("Email sent: " + info.response);
     });
   });
+
+  router.push("/profile");
   return NextResponse.json({ message: "This is a POST Request" });
 }
 

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { accessToken, express } from "@/lib/actions/daraja.action";
@@ -7,7 +7,6 @@ import { createUser } from "@/lib/actions/ticket.action";
 import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { NextResponse } from "next/server";
-import { useGlobalContext } from "@/context/UserProvider";
 
 type Inputs = {
   name: string;
@@ -16,8 +15,6 @@ type Inputs = {
 };
 
 const Page = () => {
-  const router = useRouter();
-
   const {
     register,
     handleSubmit,
@@ -45,8 +42,6 @@ const Page = () => {
           //////////Confirm Payment///////////////
 
           setisLoading(false);
-
-          router.push("/api/callback");
           return NextResponse.json({ message: "User Created" });
         } catch (error: any) {
           console.error("Error creating user:", error);
