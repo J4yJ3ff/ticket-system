@@ -17,7 +17,7 @@ export async function POST(req: any, res: any) {
   );
 
   const result_code = callbackMetadata.Body.stkCallback.ResultCode;
-
+  // const phoneObj = { Name: "PhoneNumber", Value: 254797919705 };
   console.log("PhoneObj:", phoneObj);
 
   const formattedPhone = formatMobileNumber(phoneObj);
@@ -37,49 +37,55 @@ export async function POST(req: any, res: any) {
   // const encoded_data = btoa(jsonString);
   //////////////////////QR CODE/////////////////////////////////
 
-  qr.toDataURL(jsonString, { errorCorrectionLevel: "H" }, async (err, url) => {
-    if (err) {
-      console.log(err);
-      return;
-    }
+  if (result_code === "0") {
+    qr.toDataURL(
+      jsonString,
+      { errorCorrectionLevel: "H" },
+      async (err, url) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
 
-    /////////////////////////Email -> NODEMAILER/////////////////////////
+        /////////////////////////Email -> NODEMAILER/////////////////////////
 
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false, // Use `true` for port 465, `false` for all other ports
-      auth: {
-        user: process.env.GOOGLE_APP_EMAIL,
-        pass: process.env.GOOGLE_APP_PASS,
-      },
-    });
+        const transporter = nodemailer.createTransport({
+          host: "smtp.gmail.com",
+          port: 587,
+          secure: false, // Use `true` for port 465, `false` for all other ports
+          auth: {
+            user: process.env.GOOGLE_APP_EMAIL,
+            pass: process.env.GOOGLE_APP_PASS,
+          },
+        });
 
-    let mailOptions = {
-      from: {
-        name: "Thought Be Things",
-        address: "gaspergvj@gmail.com",
-      },
-      to: email,
-      subject: "QR Code",
-      text: "Please find your QR code attached.",
-      attachments: [
-        {
-          filename: "qrcode.png",
-          content: url.split("base64,")[1],
-          encoding: "base64",
-        },
-      ],
-    };
+        let mailOptions = {
+          from: {
+            name: "Thought Be Things",
+            address: "gaspergvj@gmail.com",
+          },
+          to: email,
+          subject: "QR Code",
+          text: "Thank you for purchasing the ticket. The attached qr will be used for you verification at the entrance",
+          attachments: [
+            {
+              filename: "qrcode.png",
+              content: url.split("base64,")[1],
+              encoding: "base64",
+            },
+          ],
+        };
 
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.log(error);
-        return;
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            console.log(error);
+            return;
+          }
+          console.log("Email sent: " + info.response);
+        });
       }
-      console.log("Email sent: " + info.response);
-    });
-  });
+    );
+  }
 
   return NextResponse.json({ message: "This is a POST Request" });
 }
