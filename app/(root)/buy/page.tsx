@@ -80,7 +80,7 @@ const Page = () => {
         <Input
           type="email"
           placeholder="Your Email Address"
-          value="gaspergvj@gmil.com"
+          value="jeffryjames07@gmail.com"
           {...register("email", { required: true })}
           className="bg-slate-300"
         />

@@ -4,22 +4,25 @@ import { useGlobalContext } from "@/context/UserProvider";
 import { getUserInfo } from "@/lib/actions/ticket.action";
 import { formatMobileNumber } from "@/lib/utils";
 import { NextResponse } from "next/server";
-import { useEffect } from "react";
-import { Resend } from "resend";
+import qr from "qrcode";
+import nodemailer from "nodemailer";
+import { url } from "inspector";
 
 export async function POST(req: any, res: any) {
-  const data = await req.json();
-  console.log("data:", data);
+  // const data = await req.json();
+  // console.log("data:", data);
 
-  const callbackMetadata = data.Body.stkCallback.CallbackMetadata;
-  console.log("Metadata:", callbackMetadata);
-  const phoneObj = callbackMetadata.Item.find(
-    (obj: any) => obj.Name === "PhoneNumber"
-  );
+  // const callbackMetadata = data.Body.stkCallback.CallbackMetadata;
+  // console.log("Metadata:", callbackMetadata);
+  // const phoneObj = callbackMetadata.Item.find(
+  //   (obj: any) => obj.Name === "PhoneNumber"
+  // );
 
-  const result_code = callbackMetadata.Body.stkCallback.ResultCode;
+  // const result_code = callbackMetadata.Body.stkCallback.ResultCode;
 
-  console.log("PhoneObj:", phoneObj);
+  // console.log("PhoneObj:", phoneObj);
+
+  const phoneObj = { Name: "PhoneNumber", Value: 254797919705 };
 
   const formattedPhone = formatMobileNumber(phoneObj);
   console.log("formattedPhone:", formattedPhone);
@@ -29,11 +32,58 @@ export async function POST(req: any, res: any) {
 
   console.log(email, name);
   ////////////////////Email Payload////////////////////////////
-  //////////////////////Qr_Encode//////////////////////////////
+  const payload = {
+    phoneNumber: phoneObj.Value,
+    email: email,
+    name: name,
+  };
+  const jsonString = JSON.stringify(payload);
+  // const encoded_data = btoa(jsonString);
+  //////////////////////QR CODE/////////////////////////////////
 
-  if (result_code) {
-  }
+  qr.toDataURL(jsonString, { errorCorrectionLevel: "H" }, async (err, url) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
 
+    /////////////////////////Email -> NODEMAILER/////////////////////////
+
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false, // Use `true` for port 465, `false` for all other ports
+      auth: {
+        user: "gaspergvj@gmail.com",
+        pass: "iizz utlc elkw mpji",
+      },
+    });
+
+    let mailOptions = {
+      from: {
+        name: "Thought Be Things",
+        address: "gaspergvj@gmail.com",
+      },
+      to: email,
+      subject: "QR Code",
+      text: "Please find your QR code attached.",
+      attachments: [
+        {
+          filename: "qrcode.png",
+          content: url.split("base64,")[1],
+          encoding: "base64",
+        },
+      ],
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+      console.log("Email sent: " + info.response);
+    });
+  });
   return NextResponse.json({ message: "This is a POST Request" });
 }
 
