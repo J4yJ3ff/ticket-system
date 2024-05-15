@@ -57,7 +57,7 @@ export async function express(data: accessProps) {
     PartyA: formattedNumber,
     PartyB: "174379",
     PhoneNumber: formattedNumber,
-    CallBackURL: `https://coral-app-4ebt9.ondigitalocean.app/api/callback`,
+    CallBackURL: `https://ticket-system-orpin.vercel.app/api/callback`,
     AccountReference: "TBT",
     TransactionDesc: "Cultural Show",
   };
