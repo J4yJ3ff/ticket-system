@@ -9,20 +9,18 @@ import nodemailer from "nodemailer";
 import { url } from "inspector";
 
 export async function POST(req: any, res: any) {
-  // const data = await req.json();
-  // console.log("data:", data);
+  const data = await req.json();
+  console.log("data:", data);
 
-  // const callbackMetadata = data.Body.stkCallback.CallbackMetadata;
-  // console.log("Metadata:", callbackMetadata);
-  // const phoneObj = callbackMetadata.Item.find(
-  //   (obj: any) => obj.Name === "PhoneNumber"
-  // );
+  const callbackMetadata = data.Body.stkCallback.CallbackMetadata;
+  console.log("Metadata:", callbackMetadata);
+  const phoneObj = callbackMetadata.Item.find(
+    (obj: any) => obj.Name === "PhoneNumber"
+  );
 
-  // const result_code = callbackMetadata.Body.stkCallback.ResultCode;
+  const result_code = callbackMetadata.Body.stkCallback.ResultCode;
 
-  // console.log("PhoneObj:", phoneObj);
-
-  const phoneObj = { Name: "PhoneNumber", Value: 254797919705 };
+  console.log("PhoneObj:", phoneObj);
 
   const formattedPhone = formatMobileNumber(phoneObj);
   console.log("formattedPhone:", formattedPhone);
