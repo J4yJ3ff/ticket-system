@@ -15,6 +15,8 @@ type Inputs = {
 };
 
 const Page = () => {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -42,6 +44,8 @@ const Page = () => {
           //////////Confirm Payment///////////////
 
           setisLoading(false);
+
+          router.push("/profile");
           return NextResponse.json({ message: "User Created" });
         } catch (error: any) {
           console.error("Error creating user:", error);

@@ -1,15 +1,12 @@
 // pages/api/example.js
-"use client";
 
 import { getUserInfo } from "@/lib/actions/ticket.action";
 import { formatMobileNumber } from "@/lib/utils";
 import { NextResponse } from "next/server";
 import qr from "qrcode";
 import nodemailer from "nodemailer";
-import { useRouter } from "next/navigation";
 
 export async function POST(req: any, res: any) {
-  const router = useRouter();
   const data = await req.json();
   console.log("data:", data);
 
@@ -84,7 +81,6 @@ export async function POST(req: any, res: any) {
     });
   });
 
-  router.push("/profile");
   return NextResponse.json({ message: "This is a POST Request" });
 }
 
