@@ -1,12 +1,11 @@
 // pages/api/example.js
+"use client";
 
-import { useGlobalContext } from "@/context/UserProvider";
 import { getUserInfo } from "@/lib/actions/ticket.action";
 import { formatMobileNumber } from "@/lib/utils";
 import { NextResponse } from "next/server";
 import qr from "qrcode";
 import nodemailer from "nodemailer";
-import { url } from "inspector";
 import { useRouter } from "next/navigation";
 
 export async function POST(req: any, res: any) {
