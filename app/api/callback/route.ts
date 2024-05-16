@@ -37,7 +37,7 @@ export async function POST(req: any, res: any) {
   // const encoded_data = btoa(jsonString);
   //////////////////////QR CODE/////////////////////////////////
 
-  if (result_code === "0") {
+  if (result_code === 0) {
     qr.toDataURL(
       jsonString,
       { errorCorrectionLevel: "H" },
