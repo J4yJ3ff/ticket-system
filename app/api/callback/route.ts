@@ -87,5 +87,5 @@ export async function POST(req: any, res: any) {
     );
   }
 
-  return NextResponse.json({ message: "This is a POST Request" });
+  return NextResponse.json({ message: ".This is a POST Request." });
 }
