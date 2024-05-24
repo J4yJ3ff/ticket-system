@@ -1,14 +1,9 @@
-"use client";
-// pages/api/example.js
-
 import { createUser } from "@/lib/actions/ticket.action";
 import { NextResponse } from "next/server";
 import qr from "qrcode";
 import nodemailer from "nodemailer";
-import { useRouter } from "next/navigation";
 
 export async function POST(req: any, res: any) {
-  const router = useRouter();
   const { searchParams } = new URL(req.url);
   const email = searchParams.get("email");
   const name = "J4y J3ff";
@@ -99,8 +94,7 @@ export async function POST(req: any, res: any) {
       }
     );
 
-    return res.redirect(
-      302,
+    return NextResponse.redirect(
       `/thank-you?email=${encodeURIComponent(email)}&name=${encodeURIComponent(
         name
       )}`

@@ -1,11 +1,9 @@
-interface PageProps {
-  searchParams: {
-    [key: string]: string | string[] | undefined;
-  };
-}
+"use client";
+import { useRouter } from "next/router";
 
-const ThankYouPage = ({ searchParams }: PageProps) => {
-  const email = searchParams.email;
+const ThankYouPage = () => {
+  const router = useRouter();
+  const { email } = router.query;
 
   return (
     <div>
