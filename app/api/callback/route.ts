@@ -13,16 +13,14 @@ export async function POST(req: any, res: any) {
     return NextResponse.json({ message: "Email is required" }, { status: 400 });
   }
 
-  const data = await req.json();
-  console.log("data:", data);
+  const callbackData = await req.json();
+  console.log("data:", callbackData);
 
-  const callbackMetadata = data.data.Body.stkCallback.CallbackMetadata;
-  console.log("Metadata:", callbackMetadata);
-  const phoneObj = callbackMetadata.Item.find(
-    (obj: any) => obj.Name === "PhoneNumber"
-  );
+  const body = callbackData.Body.stkCallback.CallbackMetadata;
+  console.log("Metadata:", body);
+  const phoneObj = body.Item.find((obj: any) => obj.Name === "PhoneNumber");
 
-  const result_code = callbackMetadata.Body.stkCallback.ResultCode;
+  const result_code = callbackData.Body.stkCallback.ResultCode;
   console.log("result_code", result_code);
 
   const phone = phoneObj.Value;
