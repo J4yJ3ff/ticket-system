@@ -42,5 +42,5 @@ export async function POST(req: any, res: any) {
     console.log(`User created: ${userName}, ${userEmail}`);
   }
 
-  return NextResponse.json({ message: "This is a POST Request" });
+  return NextResponse.json({ message: ".This is a POST Request." });
 }
