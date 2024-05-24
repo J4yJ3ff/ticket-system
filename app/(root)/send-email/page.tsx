@@ -1,11 +1,13 @@
 import nodemailer from "nodemailer";
 import qr from "qrcode";
 
-const page = () => {
-  const phone = "0797919705";
-  const userEmail = "gaspergvj@gmail.com";
-  const userName = "J4y J3ff";
+interface Props {
+  phone: string;
+  userEmail: string;
+  userName: string;
+}
 
+const SendMail = ({ phone, userEmail, userName }: Props) => {
   const payload = {
     phoneNumber: phone,
     email: userEmail,
@@ -59,4 +61,4 @@ const page = () => {
   });
 };
 
-export default page;
+export default SendMail;

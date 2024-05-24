@@ -2,6 +2,7 @@ import { createUser } from "@/lib/actions/ticket.action";
 import { NextResponse } from "next/server";
 import qr from "qrcode";
 import nodemailer from "nodemailer";
+import SendMail from "@/app/(root)/send-email/page";
 
 export async function POST(req: any, res: any) {
   const { searchParams } = new URL(req.url);
@@ -36,68 +37,8 @@ export async function POST(req: any, res: any) {
     console.log(`User created: ${userName}, ${userEmail}`);
 
     ////////////////////Email Payload////////////////////////////
-    const payload = {
-      phoneNumber: phone,
-      email: userEmail,
-      name: userName,
-    };
-    const jsonString = JSON.stringify(payload);
-    // const encoded_data = btoa(jsonString);
-
     //////////////////////QR CODE/////////////////////////////////
-
-    qr.toDataURL(
-      jsonString,
-      { errorCorrectionLevel: "H" },
-      async (err, url) => {
-        if (err) {
-          console.log(err);
-          return;
-        }
-
-        console.log(url.split("base64,")[1]);
-
-        const transporter = nodemailer.createTransport({
-          host: "smtp.resend.com",
-          port: 465,
-          secure: true, // Use `true` for port 465, `false` for all other ports
-          auth: {
-            user: "resend",
-            pass: process.env.RESEND_API_KEY,
-          },
-        });
-        console.log("Transporter initialized");
-
-        let mailOptions = {
-          from: {
-            name: "Thought Be Things",
-            address: "info@nohoaxx.com",
-          },
-          to: userEmail,
-          subject: "QR Code",
-          text: "Thank you for purchasing the ticket. The attached qr will be used for you verification at the entrance",
-          attachments: [
-            {
-              filename: "qrcode.png",
-              content: url.split("base64,")[1],
-              encoding: "base64",
-            },
-          ],
-        };
-
-        console.log("mail options set");
-
-        transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-            console.log(error);
-            return;
-          }
-          console.log("Email sent: " + info.response);
-        });
-
-        console.log("email sent");
-      }
-    );
+    SendMail({ phone, userEmail, userName });
 
     return NextResponse.redirect(
       "https://ticket-system-orpin.vercel.app/thank-you"
