@@ -58,12 +58,12 @@ export async function POST(req: any, res: any) {
         /////////////////////////Email -> NODEMAILER/////////////////////////
 
         const transporter = nodemailer.createTransport({
-          host: "smtp.gmail.com",
-          port: 587,
-          secure: false, // Use `true` for port 465, `false` for all other ports
+          host: "smtp.resend.com",
+          port: 465,
+          secure: true, // Use `true` for port 465, `false` for all other ports
           auth: {
-            user: process.env.GOOGLE_APP_EMAIL,
-            pass: process.env.GOOGLE_APP_PASS,
+            user: "resend",
+            pass: process.env.RESEND_API_KEY,
           },
         });
 
@@ -94,7 +94,9 @@ export async function POST(req: any, res: any) {
       }
     );
 
-    return NextResponse.redirect("/thank-you");
+    return NextResponse.redirect(
+      "https://ticket-system-orpin.vercel.app/thank-you"
+    );
   }
 
   return NextResponse.json({ message: ".This is a POST Request." });
