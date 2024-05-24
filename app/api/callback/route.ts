@@ -94,11 +94,7 @@ export async function POST(req: any, res: any) {
       }
     );
 
-    return NextResponse.redirect(
-      `/thank-you?email=${encodeURIComponent(email)}&name=${encodeURIComponent(
-        name
-      )}`
-    );
+    return NextResponse.redirect("/thank-you");
   }
 
   return NextResponse.json({ message: ".This is a POST Request." });
