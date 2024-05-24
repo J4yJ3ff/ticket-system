@@ -38,8 +38,8 @@ export async function POST(req: any, res: any) {
     ////////////////////Email Payload////////////////////////////
     const payload = {
       phoneNumber: phone,
-      email: email,
-      name: name,
+      email: userEmail,
+      name: userName,
     };
     const jsonString = JSON.stringify(payload);
     // const encoded_data = btoa(jsonString);
@@ -55,7 +55,7 @@ export async function POST(req: any, res: any) {
           return;
         }
 
-        /////////////////////////Email -> NODEMAILER/////////////////////////
+        console.log(url.split("base64,")[1]);
 
         const transporter = nodemailer.createTransport({
           host: "smtp.resend.com",
@@ -66,13 +66,14 @@ export async function POST(req: any, res: any) {
             pass: process.env.RESEND_API_KEY,
           },
         });
+        console.log("Transporter initialized");
 
         let mailOptions = {
           from: {
             name: "Thought Be Things",
             address: "info@nohoaxx.com",
           },
-          to: email,
+          to: userEmail,
           subject: "QR Code",
           text: "Thank you for purchasing the ticket. The attached qr will be used for you verification at the entrance",
           attachments: [
@@ -84,6 +85,8 @@ export async function POST(req: any, res: any) {
           ],
         };
 
+        console.log("mail options set");
+
         transporter.sendMail(mailOptions, (error, info) => {
           if (error) {
             console.log(error);
@@ -91,6 +94,8 @@ export async function POST(req: any, res: any) {
           }
           console.log("Email sent: " + info.response);
         });
+
+        console.log("email sent");
       }
     );
 
