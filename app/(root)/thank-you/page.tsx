@@ -1,12 +1,19 @@
-import React from "react";
+"use client";
+import { useRouter } from "next/router";
 
-const page = () => {
+const ThankYouPage = () => {
+  const router = useRouter();
+  const { email, name } = router.query;
+
   return (
     <div>
-      Thank you for buying the 2024 Cultural show ticket. We have sent your
-      ticket to your email.
+      <h1>Thank You, {name}!</h1>
+      <p>
+        We have received your payment. A confirmation email has been sent to{" "}
+        {email}.
+      </p>
     </div>
   );
 };
 
-export default page;
+export default ThankYouPage;

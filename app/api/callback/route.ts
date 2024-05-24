@@ -1,3 +1,4 @@
+"use client";
 // pages/api/example.js
 
 import { createUser } from "@/lib/actions/ticket.action";
@@ -98,7 +99,12 @@ export async function POST(req: any, res: any) {
       }
     );
 
-    router.push("/thank-you");
+    return res.redirect(
+      302,
+      `/thank-you?email=${encodeURIComponent(email)}&name=${encodeURIComponent(
+        name
+      )}`
+    );
   }
 
   return NextResponse.json({ message: ".This is a POST Request." });
