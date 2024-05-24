@@ -36,12 +36,13 @@ const Page = () => {
 
       if (response.ResponseCode === "0") {
         toast.success(response.CustomerMessage);
-        setisLoading(true);
+        setisLoading(false);
         router.push("/redirect");
       }
     } catch (error: any) {
       toast("Error Initiating payment. Please try again");
       console.log(error);
+      router.refresh();
     }
   };
 
