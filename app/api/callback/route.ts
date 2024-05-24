@@ -1,7 +1,5 @@
-import { createUser } from "@/lib/actions/ticket.action";
+import { SendMail, createUser } from "@/lib/actions/ticket.action";
 import { NextResponse } from "next/server";
-
-import { SendMail } from "../../(root)/send-email/page";
 
 export async function POST(req: any, res: any) {
   const { searchParams } = new URL(req.url);
