@@ -7,6 +7,7 @@ import { createUser } from "@/lib/actions/ticket.action";
 import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { NextResponse } from "next/server";
+import { toast } from "sonner";
 
 type Inputs = {
   name: string;
@@ -31,27 +32,15 @@ const Page = () => {
     try {
       const access = await accessToken();
       console.log("Access token", access);
-      const response = await express({ access, phone });
+      const response = await express({ access, phone, email, name });
 
       if (response.ResponseCode === "0") {
-        try {
-          const user = await createUser({
-            name,
-            email,
-            phone,
-          });
-
-          //////////Confirm Payment///////////////
-
-          setisLoading(false);
-
-          router.push("/profile");
-          return NextResponse.json({ message: "User Created" });
-        } catch (error: any) {
-          console.error("Error creating user:", error);
-        }
+        toast.success(response.CustomerMessage);
+        setisLoading(true);
+        router.push("/redirect");
       }
     } catch (error: any) {
+      toast("Error Initiating payment. Please try again");
       console.log(error);
     }
   };

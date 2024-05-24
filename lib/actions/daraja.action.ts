@@ -5,6 +5,8 @@ import { createTimestamp, formatPhoneNumber } from "../utils";
 interface accessProps {
   access: string;
   phone: string;
+  email: string;
+  name: string;
 }
 
 export async function accessToken() {
@@ -31,7 +33,7 @@ export async function accessToken() {
 /////////////////////////STK Push/////////////////////////////
 
 export async function express(data: accessProps) {
-  const { access, phone } = data;
+  const { access, phone, email, name } = data;
 
   const formattedNumber = formatPhoneNumber(phone);
 
@@ -57,7 +59,9 @@ export async function express(data: accessProps) {
     PartyA: formattedNumber,
     PartyB: "174379",
     PhoneNumber: formattedNumber,
-    CallBackURL: `https://ticket-system-orpin.vercel.app/api/callback`,
+    CallBackURL: `https://ticket-system-orpin.vercel.app/api/callback?email=${encodeURIComponent(
+      email
+    )}`,
     AccountReference: "TBT",
     TransactionDesc: "Cultural Show",
   };
@@ -70,7 +74,7 @@ export async function express(data: accessProps) {
       { headers }
     );
     if (response.status === 200) {
-      console.log(response.data);
+      console.log(response.data.CustomerMessage);
       return response.data;
     } else {
       console.log("Request failed");
