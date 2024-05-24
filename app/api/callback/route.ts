@@ -16,7 +16,7 @@ export async function POST(req: any, res: any) {
   const data = await req.json();
   console.log("data:", data);
 
-  const callbackMetadata = data.Body.stkCallback.CallbackMetadata;
+  const callbackMetadata = data.data.Body.stkCallback.CallbackMetadata;
   console.log("Metadata:", callbackMetadata);
   const phoneObj = callbackMetadata.Item.find(
     (obj: any) => obj.Name === "PhoneNumber"
