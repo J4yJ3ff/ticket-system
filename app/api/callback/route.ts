@@ -70,7 +70,7 @@ export async function POST(req: any, res: any) {
         let mailOptions = {
           from: {
             name: "Thought Be Things",
-            address: "gaspergvj@gmail.com",
+            address: "info@nohoaxx.com",
           },
           to: email,
           subject: "QR Code",
