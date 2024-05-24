@@ -1,8 +1,7 @@
 import { createUser } from "@/lib/actions/ticket.action";
 import { NextResponse } from "next/server";
-import qr from "qrcode";
-import nodemailer from "nodemailer";
-import SendMail from "../../(root)/send-email/page";
+
+import { SendMail } from "../../(root)/send-email/page";
 
 export async function POST(req: any, res: any) {
   const { searchParams } = new URL(req.url);

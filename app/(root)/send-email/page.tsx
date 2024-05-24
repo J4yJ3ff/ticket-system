@@ -1,13 +1,7 @@
 import nodemailer from "nodemailer";
 import qr from "qrcode";
 
-interface Props {
-  phone: string;
-  userEmail: string;
-  userName: string;
-}
-
-const SendMail = ({ phone, userEmail, userName }: Props) => {
+export function SendMail({ phone, userEmail, userName }: any) {
   const payload = {
     phoneNumber: phone,
     email: userEmail,
@@ -59,6 +53,4 @@ const SendMail = ({ phone, userEmail, userName }: Props) => {
       console.log("Email sent: " + info.response);
     });
   });
-};
-
-export default SendMail;
+}
