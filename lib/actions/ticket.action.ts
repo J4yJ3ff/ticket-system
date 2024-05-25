@@ -67,7 +67,17 @@ export async function createUser(params: CreateUserParams) {
   }
 }
 
-export async function SendMail({ phone, userEmail, userName }: any) {
+export async function SendMail({
+  phone,
+  userEmail,
+  userName,
+}: {
+  phone: string;
+  userEmail: string;
+  userName: string;
+}) {
+  console.log("Sending email to:", { phone, userEmail, userName });
+
   const payload = {
     phoneNumber: phone,
     email: userEmail,
@@ -96,7 +106,7 @@ export async function SendMail({ phone, userEmail, userName }: any) {
 
     let mailOptions = {
       from: {
-        name: "Thought Be Things",
+        name: "Cultural Show",
         address: "info@nohoaxx.com",
       },
       to: userEmail,

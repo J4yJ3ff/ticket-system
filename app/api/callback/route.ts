@@ -33,15 +33,15 @@ export async function POST(req: any, res: any) {
     ////////////////////Email Payload////////////////////////////
     //////////////////////QR CODE////////////////////////////////
     try {
-      SendMail({ phone, userEmail, userName });
+      await SendMail({ phone, userEmail, userName });
       console.log("Email sent");
+
+      return NextResponse.redirect(
+        "https://ticket-system-orpin.vercel.app/thank-you"
+      );
     } catch (error) {
       console.log("Email Error:", error);
     }
-
-    return NextResponse.redirect(
-      "https://ticket-system-orpin.vercel.app/thank-you"
-    );
   }
 
   return NextResponse.json({ message: ".This is a POST Request." });
