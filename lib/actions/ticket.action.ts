@@ -67,7 +67,7 @@ export async function createUser(params: CreateUserParams) {
   }
 }
 
-export function SendMail({ phone, userEmail, userName }: any) {
+export async function SendMail({ phone, userEmail, userName }: any) {
   const payload = {
     phoneNumber: phone,
     email: userEmail,
