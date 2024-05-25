@@ -84,15 +84,12 @@ export async function SendMail({
     name: userName,
   };
   const jsonString = JSON.stringify(payload);
-  // const encoded_data = btoa(jsonString);
+  console.log(jsonString);
 
-  //////////////////////QR CODE/////////////////////////////////
-
-  qr.toDataURL(jsonString, { errorCorrectionLevel: "H" }, async (err, url) => {
-    if (err) {
-      console.log(err);
-      return;
-    }
+  try {
+    // Generate QR code
+    const url = await qr.toDataURL(jsonString, { errorCorrectionLevel: "H" });
+    console.log("QR Code generated");
 
     const transporter = nodemailer.createTransport({
       host: "smtp.resend.com",
@@ -104,14 +101,14 @@ export async function SendMail({
       },
     });
 
-    let mailOptions = {
+    const mailOptions = {
       from: {
         name: "Cultural Show",
         address: "info@nohoaxx.com",
       },
       to: userEmail,
       subject: "QR Code",
-      text: "Thank you for purchasing the ticket. The attached qr will be used for you verification at the entrance",
+      text: "Thank you for purchasing the ticket. The attached QR code will be used for your verification at the entrance.",
       attachments: [
         {
           filename: "qrcode.png",
@@ -121,14 +118,9 @@ export async function SendMail({
       ],
     };
 
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.log(error);
-        return;
-      }
-      console.log("Email sent: " + info.response);
-    });
-  });
-
-  return;
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email sent: " + info.response);
+  } catch (error) {
+    console.error("Failed to send email:", error);
+  }
 }
