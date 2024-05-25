@@ -10,16 +10,13 @@ export async function POST(req: any, res: any) {
   if (!email) {
     return NextResponse.json({ message: "Email is required" }, { status: 400 });
   }
-
   const callbackData = await req.json();
-  console.log("data:", callbackData);
 
   const body = callbackData.Body.stkCallback.CallbackMetadata;
   console.log("Metadata:", body);
   const phoneObj = body.Item.find((obj: any) => obj.Name === "PhoneNumber");
 
   const result_code = callbackData.Body.stkCallback.ResultCode;
-  console.log("result_code", result_code);
 
   const phone = phoneObj.Value;
 
@@ -34,8 +31,13 @@ export async function POST(req: any, res: any) {
     console.log(`User created: ${userName}, ${userEmail}`);
 
     ////////////////////Email Payload////////////////////////////
-    //////////////////////QR CODE/////////////////////////////////
-    SendMail({ phone, userEmail, userName });
+    //////////////////////QR CODE////////////////////////////////
+    try {
+      SendMail({ phone, userEmail, userName });
+      console.log("Email sent");
+    } catch (error) {
+      console.log("Email Error:", error);
+    }
 
     return NextResponse.redirect(
       "https://ticket-system-orpin.vercel.app/thank-you"
