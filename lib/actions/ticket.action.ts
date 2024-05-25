@@ -129,4 +129,6 @@ export async function SendMail({
       console.log("Email sent: " + info.response);
     });
   });
+
+  return;
 }
